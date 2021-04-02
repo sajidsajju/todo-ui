@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import TodoList from "../TodoList";
 
@@ -13,11 +13,12 @@ const useStyles = makeStyles({
 
 function Main() {
   const classes = useStyles();
+  const [todos, setTodos] = useState([]);
 
   return (
     <>
       <h1 className={classes.h1}>TODO</h1>
-      <TodoList text={"hello"} />
+      <TodoList todos={todos} />
     </>
   );
 }
