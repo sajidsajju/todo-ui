@@ -1,11 +1,21 @@
 import React from "react";
+import { makeStyles } from "@material-ui/core";
 
-function Main(props) {
-  const { text } = props;
+const useStyles = makeStyles({
+  h1: {
+    textAlign: "center",
+    fontSize: "4em",
+    letterSpacing: "7px",
+    color: "#4d4d4d",
+  },
+});
+
+function Main() {
+  const classes = useStyles();
 
   return (
     <>
-      <h2>{text}</h2>
+      <h1 className={classes.h1}>TODO</h1>
     </>
   );
 }
