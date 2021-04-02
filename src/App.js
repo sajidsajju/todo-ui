@@ -1,7 +1,7 @@
 import React from "react";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { Container, CssBaseline } from "@material-ui/core";
-import TodoList from "./components/TodoList";
+import Main from "./components/Main";
 
 const theme = createMuiTheme({
   typography: {
@@ -16,10 +16,10 @@ body {background: #DFCAA0}
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <style>{body}</style>
       <CssBaseline />
       <Container>
-        <style>{body}</style>
-        <TodoList text={"random text"} />
+        <Main />
       </Container>
     </ThemeProvider>
   );
