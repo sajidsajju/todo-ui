@@ -18,7 +18,7 @@ function Main() {
 
   const [todos, setTodos] = useState(initialState);
 
-  const addTodo = (todo) => {
+  const addTodo = todo => {
     const newTodo = [todo, ...todos];
     setTodos(newTodo);
   };
