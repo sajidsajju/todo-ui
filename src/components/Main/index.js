@@ -19,8 +19,14 @@ function Main() {
   const [todos, setTodos] = useState(initialState);
 
   const addTodo = todo => {
-    const newTodo = [todo, ...todos];
-    setTodos(newTodo);
+    const newTodos = [todo, ...todos];
+    setTodos(newTodos);
+  };
+
+  const removeTodo = id => {
+    const deleteTodo = [...todos].filter(todo => todo.id !== id);
+
+    setTodos(deleteTodo);
   };
 
   useEffect(() => {
@@ -31,7 +37,7 @@ function Main() {
     <>
       <h1 className={classes.h1}>TODO</h1>
       <TodoForm addTodo={addTodo} />
-      <TodoList todos={todos} />
+      <TodoList todos={todos} removeTodo={removeTodo} />
     </>
   );
 }

@@ -9,7 +9,7 @@ module.exports = {
   extends: ["react-app", "react-app/jest", "plugin:prettier/recommended"],
   rules: {
     "prettier/prettier": ["error", prettierOptions],
-    "no-console": "error",
+    "no-console": "off",
   },
   overrides: [
     {

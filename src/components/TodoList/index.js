@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
+import ClearIcon from "@material-ui/icons/Clear";
+import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 
 const useStyles = makeStyles({
   todo: {
@@ -25,19 +27,61 @@ const useStyles = makeStyles({
       fontSize: "55em",
     },
   },
+  strikeOff: {
+    textDecoration: "line-through",
+    color: "#808080",
+  },
+  strikeOffIcon: {
+    display: "inline",
+    cursor: "pointer",
+    float: "left",
+    paddingTop: "0.2em",
+    paddingLeft: "0.2em",
+  },
+  icon: {
+    display: "inline",
+    cursor: "pointer",
+    float: "right",
+    paddingTop: "1em",
+    paddingRight: "1em",
+  },
 });
 
 const List = props => {
   const classes = useStyles();
-  const { todo } = props;
+  const { todo, removeTodo } = props;
 
   const [text, setText] = useState("");
-  const [inputField, setInputField] = useState(false);
+  const [editable, setEditable] = useState(false);
+  const [strike, setStrike] = useState(false);
+
+  const deleteTodo = (id, removeTodo) => {
+    removeTodo(id);
+  };
+
+  const Icons = (
+    <>
+      <span
+        className={classes.icon}
+        onClick={() => {
+          deleteTodo(todo.id, removeTodo);
+        }}
+      >
+        <ClearIcon />
+      </span>
+    </>
+  );
 
   return (
     <div className={classes.todo}>
       <div className={classes.wrapper}>
-        {inputField ? (
+        <span
+          className={classes.strikeOffIcon}
+          onClick={() => setStrike(!strike)}
+        >
+          <DoneOutlineIcon style={{ fontSize: "0.9em" }} />
+        </span>
+        {editable ? (
           <input
             type="text"
             className={classes.input}
@@ -46,21 +90,22 @@ const List = props => {
             data-testid="input-field"
           />
         ) : (
-          todo.text
+          <span className={strike ? classes.strikeOff : ""}>{todo.text}</span>
         )}
       </div>
+      {Icons}
       <hr />
     </div>
   );
 };
 
 function TodoList(props) {
-  const { todos } = props;
+  const { todos, removeTodo } = props;
 
   return (
     <>
       {todos.map((todo, index) => (
-        <List todo={todo} key={index} />
+        <List todo={todo} key={index} removeTodo={removeTodo} />
       ))}
     </>
   );
