@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -15,16 +15,27 @@ const useStyles = makeStyles({
   },
 });
 
-function TodoList(props) {
+const List = (props) => {
   const classes = useStyles();
-  const { todos } = props;
-
-  const [lists, setLists] = useState(todos);
+  const { todo } = props;
 
   return (
     <div className={classes.todo}>
-      <div className={classes.wrapper}>{lists}</div>
+      <div className={classes.wrapper}>{todo.text}</div>
+      <hr />
     </div>
+  );
+};
+
+function TodoList(props) {
+  const { todos } = props;
+
+  return (
+    <>
+      {todos.map((todo, index) => (
+        <List todo={todo} key={index} />
+      ))}
+    </>
   );
 }
 
