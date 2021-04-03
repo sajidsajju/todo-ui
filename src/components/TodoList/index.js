@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-const List = (props) => {
+const List = props => {
   const classes = useStyles();
   const { todo } = props;
 

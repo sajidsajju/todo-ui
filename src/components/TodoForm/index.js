@@ -28,12 +28,12 @@ function TodoForm(props) {
   const { addTodo } = props;
   const [text, setText] = useState("");
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const value = event.target.value;
     setText(value);
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = event => {
     event.preventDefault();
     const todo = {
       id: Math.floor(Math.random() * 10000),
