@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TodoList  /> should match the snapshot 1`] = `
+<div
+  class="makeStyles-todo-1"
+>
+  <div
+    class="makeStyles-wrapper-2"
+  >
+    hello
+  </div>
+  <hr />
+</div>
+`;
