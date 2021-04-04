@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     display: "inline",
   },
   input: {
-    border: "none ",
+    border: "none",
     outline: "none",
     fontSize: "1em",
     width: "72%",

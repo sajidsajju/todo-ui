@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import TodoList from "../TodoList";
 import TodoForm from "../TodoForm";
+import TodoStats from "../TodoStats";
 
 const useStyles = makeStyles({
   h1: {
@@ -17,16 +18,23 @@ function Main() {
   const initialState = JSON.parse(localStorage.getItem("todos")) || [];
 
   const [todos, setTodos] = useState(initialState);
+  const [displayTodos, setDisplayTodos] = useState(initialState);
+
+  const sort = Todos => {
+    setDisplayTodos(Todos);
+  };
 
   const addTodo = todo => {
     const newTodos = [todo, ...todos];
     setTodos(newTodos);
+    setDisplayTodos(newTodos);
   };
 
   const removeTodo = id => {
-    const deleteTodo = [...todos].filter(todo => todo.id !== id);
+    const newTodos = [...todos].filter(todo => todo.id !== id);
 
-    setTodos(deleteTodo);
+    setTodos(newTodos);
+    setDisplayTodos(newTodos);
   };
 
   const editTodo = Todo => {
@@ -38,6 +46,7 @@ function Main() {
       return todo;
     });
     setTodos(newTodos);
+    setDisplayTodos(newTodos);
   };
 
   useEffect(() => {
@@ -48,7 +57,12 @@ function Main() {
     <>
       <h1 className={classes.h1}>TODO</h1>
       <TodoForm addTodo={addTodo} />
-      <TodoList todos={todos} removeTodo={removeTodo} editTodo={editTodo} />
+      <TodoList
+        todos={displayTodos}
+        removeTodo={removeTodo}
+        editTodo={editTodo}
+      />
+      <TodoStats todos={todos} displayTodos={displayTodos} sort={sort} />
     </>
   );
 }
