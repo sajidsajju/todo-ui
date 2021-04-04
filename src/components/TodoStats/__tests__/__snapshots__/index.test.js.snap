@@ -8,7 +8,8 @@ exports[`<TodoStats  /> should match the snapshot 1`] = `
     class="makeStyles-wrapper-2"
   >
     <span>
-      0 items left
+      1
+       items left
     </span>
     <div
       class="makeStyles-links-3"

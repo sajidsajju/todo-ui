@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -34,16 +34,37 @@ const useStyles = makeStyles({
 
 function TodoStats(props) {
   const classes = useStyles();
-  const {} = props;
+  const { todos, displayTodos, sort } = props;
+
+  const allTodos = () => {
+    const newTodos = [...todos];
+    sort(newTodos);
+  };
+  const activeTodos = () => {
+    const newTodos = [...todos].filter(todo => todo.completed === false);
+    sort(newTodos);
+  };
+
+  const completedTodos = () => {
+    const newTodos = [...todos].filter(todo => todo.completed !== false);
+
+    sort(newTodos);
+  };
 
   return (
     <div className={classes.main}>
       <div className={classes.wrapper}>
-        <span>0 items left</span>
+        <span>{displayTodos.length} items left</span>
         <div className={classes.links}>
-          <span className={classes.span}>All</span>
-          <span className={classes.span}>Active</span>
-          <span className={classes.span}>Completed</span>
+          <span className={classes.span} onClick={allTodos}>
+            All
+          </span>
+          <span className={classes.span} onClick={activeTodos}>
+            Active
+          </span>
+          <span className={classes.span} onClick={completedTodos}>
+            Completed
+          </span>
         </div>
       </div>
     </div>
