@@ -29,6 +29,17 @@ function Main() {
     setTodos(deleteTodo);
   };
 
+  const editTodo = Todo => {
+    const newTodos = [...todos].map(todo => {
+      if (todo.id === Todo.id) {
+        todo.text = Todo.text;
+        todo.completed = Todo.completed;
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+  };
+
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
@@ -37,7 +48,7 @@ function Main() {
     <>
       <h1 className={classes.h1}>TODO</h1>
       <TodoForm addTodo={addTodo} />
-      <TodoList todos={todos} removeTodo={removeTodo} />
+      <TodoList todos={todos} removeTodo={removeTodo} editTodo={editTodo} />
     </>
   );
 }
