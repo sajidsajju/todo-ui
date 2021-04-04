@@ -34,35 +34,30 @@ const useStyles = makeStyles({
 
 function TodoStats(props) {
   const classes = useStyles();
-  const { todos, displayTodos, sort } = props;
+  const { filteredTodos, setStatus } = props;
 
-  const allTodos = () => {
-    const newTodos = [...todos];
-    sort(newTodos);
-  };
-  const activeTodos = () => {
-    const newTodos = [...todos].filter(todo => todo.completed === false);
-    sort(newTodos);
-  };
-
-  const completedTodos = () => {
-    const newTodos = [...todos].filter(todo => todo.completed !== false);
-
-    sort(newTodos);
+  const statusHandler = status => {
+    setStatus(status);
   };
 
   return (
     <div className={classes.main}>
       <div className={classes.wrapper}>
-        <span>{displayTodos.length} items left</span>
+        <span>{filteredTodos.length} items left</span>
         <div className={classes.links}>
-          <span className={classes.span} onClick={allTodos}>
+          <span className={classes.span} onClick={() => statusHandler("all")}>
             All
           </span>
-          <span className={classes.span} onClick={activeTodos}>
+          <span
+            className={classes.span}
+            onClick={() => statusHandler("active")}
+          >
             Active
           </span>
-          <span className={classes.span} onClick={completedTodos}>
+          <span
+            className={classes.span}
+            onClick={() => statusHandler("completed")}
+          >
             Completed
           </span>
         </div>
