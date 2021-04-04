@@ -45,21 +45,20 @@ function TodoForm(props) {
   };
 
   return (
-    <>
-      <form className={classes.form} onSubmit={onSubmit}>
-        <TextField
-          InputProps={{ className: classes.textField }}
-          margin="normal"
-          placeholder="what needs to be added ? "
-          fullWidth
-          label=" "
-          value={text}
-          onChange={handleChange}
-          autoComplete="off"
-          data-testid="input-field"
-        />
-      </form>
-    </>
+    <form className={classes.form} onSubmit={onSubmit}>
+      <TextField
+        InputProps={{ className: classes.textField }}
+        margin="normal"
+        placeholder="what needs to be added ? "
+        fullWidth
+        label=" "
+        value={text}
+        onChange={handleChange}
+        autoComplete="off"
+        required
+        data-testid="input-field"
+      />
+    </form>
   );
 }
 
