@@ -18,23 +18,18 @@ function Main() {
   const initialState = JSON.parse(localStorage.getItem("todos")) || [];
 
   const [todos, setTodos] = useState(initialState);
-  const [displayTodos, setDisplayTodos] = useState(initialState);
-
-  const sort = Todos => {
-    setDisplayTodos(Todos);
-  };
+  const [status, setStatus] = useState("all");
+  const [filteredTodos, setFilteredTodos] = useState([]);
 
   const addTodo = todo => {
     const newTodos = [todo, ...todos];
     setTodos(newTodos);
-    setDisplayTodos(newTodos);
   };
 
   const removeTodo = id => {
     const newTodos = [...todos].filter(todo => todo.id !== id);
 
     setTodos(newTodos);
-    setDisplayTodos(newTodos);
   };
 
   const editTodo = Todo => {
@@ -46,23 +41,39 @@ function Main() {
       return todo;
     });
     setTodos(newTodos);
-    setDisplayTodos(newTodos);
   };
 
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+    filteredHandler();
+  }, [todos, status]);
+
+  const filteredHandler = () => {
+    switch (status) {
+      case "completed":
+        setFilteredTodos(todos.filter(todo => todo.completed === true));
+        break;
+
+      case "active":
+        setFilteredTodos(todos.filter(todo => todo.completed === false));
+        break;
+
+      default:
+        setFilteredTodos(todos);
+        break;
+    }
+  };
 
   return (
     <>
       <h1 className={classes.h1}>TODO</h1>
       <TodoForm addTodo={addTodo} />
       <TodoList
-        todos={displayTodos}
+        todos={filteredTodos}
         removeTodo={removeTodo}
         editTodo={editTodo}
       />
-      <TodoStats todos={todos} displayTodos={displayTodos} sort={sort} />
+      <TodoStats filteredTodos={filteredTodos} setStatus={setStatus} />
     </>
   );
 }
