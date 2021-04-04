@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TodoStats  /> should match the snapshot 1`] = `
+<div
+  class="makeStyles-main-1"
+>
+  <div
+    class="makeStyles-wrapper-2"
+  >
+    <span>
+      0 items left
+    </span>
+    <div
+      class="makeStyles-links-3"
+    >
+      <span
+        class="makeStyles-span-4"
+      >
+        All
+      </span>
+      <span
+        class="makeStyles-span-4"
+      >
+        Active
+      </span>
+      <span
+        class="makeStyles-span-4"
+      >
+        Completed
+      </span>
+    </div>
+  </div>
+</div>
+`;
