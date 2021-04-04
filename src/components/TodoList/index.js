@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
+import EditIcon from "@material-ui/icons/Edit";
+import DoneIcon from "@material-ui/icons/Done";
 
 const useStyles = makeStyles({
   todo: {
@@ -49,14 +51,35 @@ const useStyles = makeStyles({
 
 const List = props => {
   const classes = useStyles();
-  const { todo, removeTodo } = props;
+  const { todo, removeTodo, editTodo } = props;
 
   const [text, setText] = useState("");
   const [editable, setEditable] = useState(false);
-  const [strike, setStrike] = useState(false);
 
   const deleteTodo = (id, removeTodo) => {
     removeTodo(id);
+  };
+
+  const updateTodo = () => {
+    setText(todo.text);
+    if (editable) {
+      const data = {
+        id: todo.id,
+        completed: todo.completed,
+        text: text,
+      };
+      editTodo(data);
+    }
+    setEditable(!editable);
+  };
+
+  const updateTodoCompletedProp = () => {
+    const data = {
+      id: todo.id,
+      completed: !todo.completed,
+      text: todo.text,
+    };
+    editTodo(data);
   };
 
   const Icons = (
@@ -66,8 +89,16 @@ const List = props => {
         onClick={() => {
           deleteTodo(todo.id, removeTodo);
         }}
+        aria-label="delete-todo"
       >
         <ClearIcon />
+      </span>
+      <span
+        className={classes.icon}
+        onClick={updateTodo}
+        aria-label="update-todo"
+      >
+        {editable ? <DoneIcon /> : <EditIcon />}
       </span>
     </>
   );
@@ -77,7 +108,8 @@ const List = props => {
       <div className={classes.wrapper}>
         <span
           className={classes.strikeOffIcon}
-          onClick={() => setStrike(!strike)}
+          onClick={updateTodoCompletedProp}
+          aria-label="updateTodoCompletedProp"
         >
           <DoneOutlineIcon style={{ fontSize: "0.9em" }} />
         </span>
@@ -90,7 +122,9 @@ const List = props => {
             data-testid="input-field"
           />
         ) : (
-          <span className={strike ? classes.strikeOff : ""}>{todo.text}</span>
+          <span className={todo.completed ? classes.strikeOff : ""}>
+            {todo.text}
+          </span>
         )}
       </div>
       {Icons}
@@ -100,12 +134,17 @@ const List = props => {
 };
 
 function TodoList(props) {
-  const { todos, removeTodo } = props;
+  const { todos, removeTodo, editTodo } = props;
 
   return (
     <>
       {todos.map((todo, index) => (
-        <List todo={todo} key={index} removeTodo={removeTodo} />
+        <List
+          todo={todo}
+          key={index}
+          removeTodo={removeTodo}
+          editTodo={editTodo}
+        />
       ))}
     </>
   );
