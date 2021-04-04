@@ -73,7 +73,7 @@ const List = props => {
     setEditable(!editable);
   };
 
-  const updateTodoCompletedProp = () => {
+  const TodoCompletedHandler = () => {
     const data = {
       id: todo.id,
       completed: !todo.completed,
@@ -108,8 +108,8 @@ const List = props => {
       <div className={classes.wrapper}>
         <span
           className={classes.strikeOffIcon}
-          onClick={updateTodoCompletedProp}
-          aria-label="updateTodoCompletedProp"
+          onClick={TodoCompletedHandler}
+          aria-label="TodoCompleted-Handler"
         >
           <DoneOutlineIcon style={{ fontSize: "0.9em" }} />
         </span>

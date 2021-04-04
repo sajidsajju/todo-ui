@@ -57,7 +57,7 @@ describe("<TodoList  />", () => {
       <TodoList todos={todos} removeTodo={removeTodo} editTodo={editTodo} />,
     );
 
-    const strikeOffButton = screen.getByLabelText("updateTodoCompletedProp");
+    const strikeOffButton = screen.getByLabelText("TodoCompleted-Handler");
     fireEvent.click(strikeOffButton);
     expect(strikeOffButton).toBeInTheDocument();
     expect(editTodo).toHaveBeenCalledTimes(1);
