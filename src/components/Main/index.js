@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import TodoList from "../TodoList";
 import TodoForm from "../TodoForm";
@@ -18,8 +18,29 @@ function Main() {
   const initialState = JSON.parse(localStorage.getItem("todos")) || [];
 
   const [todos, setTodos] = useState(initialState);
-  const [status, setStatus] = useState("all");
-  const [filteredTodos, setFilteredTodos] = useState([]);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
+  const [filter, setFilter] = useState("all");
+
+  const filteredTodos = useMemo(
+    () =>
+      todos.filter(todo => {
+        switch (filter) {
+          case "completed":
+            return todo.completed === true;
+
+          case "active":
+            return todo.completed === false;
+
+          default:
+            return todo;
+        }
+      }),
+    [todos, filter],
+  );
 
   const addTodo = todo => {
     const newTodos = [todo, ...todos];
@@ -43,27 +64,6 @@ function Main() {
     setTodos(newTodos);
   };
 
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-    filteredHandler();
-  }, [todos, status]);
-
-  const filteredHandler = () => {
-    switch (status) {
-      case "completed":
-        setFilteredTodos(todos.filter(todo => todo.completed === true));
-        break;
-
-      case "active":
-        setFilteredTodos(todos.filter(todo => todo.completed === false));
-        break;
-
-      default:
-        setFilteredTodos(todos);
-        break;
-    }
-  };
-
   return (
     <>
       <h1 className={classes.h1}>TODO</h1>
@@ -73,7 +73,7 @@ function Main() {
         removeTodo={removeTodo}
         editTodo={editTodo}
       />
-      <TodoStats filteredTodos={filteredTodos} setStatus={setStatus} />
+      <TodoStats todos={filteredTodos} setFilter={setFilter} />
     </>
   );
 }
