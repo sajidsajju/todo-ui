@@ -1,6 +1,10 @@
 import React from "react";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { Container, CssBaseline } from "@material-ui/core";
+import {
+  createMuiTheme,
+  makeStyles,
+  ThemeProvider,
+} from "@material-ui/core/styles";
+import { CssBaseline } from "@material-ui/core";
 import Main from "./components/Main";
 
 const theme = createMuiTheme({
@@ -9,18 +13,26 @@ const theme = createMuiTheme({
   },
 });
 
-const body = `
-body {background: #DFCAA0}
-`;
+const useStyles = makeStyles({
+  "@global": {
+    body: {
+      position: "absolute",
+      width: "100vw",
+      height: "100vh",
+      background: "#DFCAA0",
+      overflowX: "hidden",
+    },
+  },
+});
 
 function App() {
+  const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      <style>{body}</style>
       <CssBaseline />
-      <Container>
+      <div className={classes.body}>
         <Main />
-      </Container>
+      </div>
     </ThemeProvider>
   );
 }
