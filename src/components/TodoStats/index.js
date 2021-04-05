@@ -6,7 +6,6 @@ const useStyles = makeStyles({
     width: "40em",
     margin: "auto",
     background: "#654321",
-    marginBottom: "5em",
   },
   wrapper: {
     paddingLeft: "10px",
@@ -34,29 +33,29 @@ const useStyles = makeStyles({
 
 function TodoStats(props) {
   const classes = useStyles();
-  const { filteredTodos, setStatus } = props;
+  const { todos, setFilter } = props;
 
-  const statusHandler = status => {
-    setStatus(status);
+  const filterHandler = filter => {
+    setFilter(filter);
   };
 
   return (
     <div className={classes.main}>
       <div className={classes.wrapper}>
-        <span>{filteredTodos.length} items left</span>
+        <span>{todos.length} items left</span>
         <div className={classes.links}>
-          <span className={classes.span} onClick={() => statusHandler("all")}>
+          <span className={classes.span} onClick={() => filterHandler("all")}>
             All
           </span>
           <span
             className={classes.span}
-            onClick={() => statusHandler("active")}
+            onClick={() => filterHandler("active")}
           >
             Active
           </span>
           <span
             className={classes.span}
-            onClick={() => statusHandler("completed")}
+            onClick={() => filterHandler("completed")}
           >
             Completed
           </span>

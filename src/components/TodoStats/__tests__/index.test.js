@@ -4,47 +4,45 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import TodoStats from "../";
 
 describe("<TodoStats  />", () => {
-  let setStatus = jest.fn();
-  const filteredTodos = [{ text: "hello" }];
+  const setFilter = jest.fn();
+  const todos = [{ text: "hello" }];
 
   it("should match the snapshot", () => {
-    const rendered = render(
-      <TodoStats setStatus={setStatus} filteredTodos={filteredTodos} />,
-    );
+    const rendered = render(<TodoStats setFilter={setFilter} todos={todos} />);
 
     expect(rendered.container.firstChild).toMatchSnapshot();
   });
 
-  it("should match the length of the displayTodos", () => {
-    render(<TodoStats setStatus={setStatus} filteredTodos={filteredTodos} />);
+  it("should match the length of the todos", () => {
+    render(<TodoStats setFilter={setFilter} todos={todos} />);
 
     expect(screen.getByText("1 items left")).toBeInTheDocument();
   });
 
-  it("should call allTodos when click event fired on All Button", () => {
-    render(<TodoStats setStatus={setStatus} filteredTodos={filteredTodos} />);
+  it("should call filterHandler when click event fired on All Button", () => {
+    render(<TodoStats setFilter={setFilter} todos={todos} />);
 
-    const statusHandler = screen.getByText("All");
-    fireEvent.click(statusHandler);
-    expect(statusHandler).toBeInTheDocument();
-    expect(setStatus).toHaveBeenCalledTimes(1);
+    const filterHandler = screen.getByText("All");
+    fireEvent.click(filterHandler);
+    expect(filterHandler).toBeInTheDocument();
+    expect(setFilter).toHaveBeenCalledTimes(1);
   });
 
-  it("should call activeTodos when click event fired on Active Button", () => {
-    render(<TodoStats setStatus={setStatus} filteredTodos={filteredTodos} />);
+  it("should call filterHandler when click event fired on Active Button", () => {
+    render(<TodoStats setFilter={setFilter} todos={todos} />);
 
-    const statusHandler = screen.getByText("Active");
-    fireEvent.click(statusHandler);
-    expect(statusHandler).toBeInTheDocument();
-    expect(setStatus).toHaveBeenCalledTimes(1);
+    const filterHandler = screen.getByText("Active");
+    fireEvent.click(filterHandler);
+    expect(filterHandler).toBeInTheDocument();
+    expect(setFilter).toHaveBeenCalledTimes(1);
   });
 
-  it("should call completedTodos when click event fired on Completed Button", () => {
-    render(<TodoStats setStatus={setStatus} filteredTodos={filteredTodos} />);
+  it("should call filterHandler when click event fired on Completed Button", () => {
+    render(<TodoStats setFilter={setFilter} todos={todos} />);
 
-    const statusHandler = screen.getByText("Completed");
-    fireEvent.click(statusHandler);
-    expect(statusHandler).toBeInTheDocument();
-    expect(setStatus).toHaveBeenCalledTimes(1);
+    const filterHandler = screen.getByText("Completed");
+    fireEvent.click(filterHandler);
+    expect(filterHandler).toBeInTheDocument();
+    expect(setFilter).toHaveBeenCalledTimes(1);
   });
 });
