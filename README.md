@@ -1,3 +1,17 @@
+# Todo UI
+
+## Features in our project
+
+- Add Todo
+- Edit Todo
+- Delete Todo
+
+Filters:
+
+- All
+- Active
+- Completed
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
