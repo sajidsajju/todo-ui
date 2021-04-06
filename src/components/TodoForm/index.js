@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { makeStyles, TextField } from "@material-ui/core";
+import firebase from "../../util/firebase";
+
+const todoRef = firebase.database().ref("Todo");
 
 const useStyles = makeStyles({
   form: {
@@ -23,9 +26,8 @@ const useStyles = makeStyles({
   },
 });
 
-function TodoForm(props) {
+function TodoForm() {
   const classes = useStyles();
-  const { addTodo } = props;
   const [text, setText] = useState("");
 
   const handleChange = event => {
@@ -36,11 +38,10 @@ function TodoForm(props) {
   const onSubmit = event => {
     event.preventDefault();
     const todo = {
-      id: Math.floor(Math.random() * 10000),
       text: text,
       completed: false,
     };
-    addTodo(todo);
+    todoRef.push(todo);
     setText("");
   };
 

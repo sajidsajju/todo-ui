@@ -8,7 +8,7 @@ exports[`<TodoList  /> should match the snapshot 1`] = `
     class="makeStyles-wrapper-2"
   >
     <span
-      aria-label="TodoCompleted-Handler"
+      aria-label="update-completed-todo"
       class="makeStyles-strikeOffIcon-5"
     >
       <svg

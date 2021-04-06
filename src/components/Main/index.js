@@ -1,8 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { makeStyles } from "@material-ui/core";
+import firebase from "../../util/firebase";
+
 import TodoList from "../TodoList";
 import TodoForm from "../TodoForm";
 import TodoStats from "../TodoStats";
+
+const todoRef = firebase.database().ref("Todo");
 
 const useStyles = makeStyles({
   h1: {
@@ -15,15 +19,24 @@ const useStyles = makeStyles({
 
 function Main() {
   const classes = useStyles();
-  const initialState = JSON.parse(localStorage.getItem("todos")) || [];
 
-  const [todos, setTodos] = useState(initialState);
+  const [todos, setTodos] = useState([]);
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
+    data();
+  }, []);
 
-  const [filter, setFilter] = useState("all");
+  const data = () => {
+    todoRef.on("value", snapshot => {
+      const todos = snapshot.val();
+      const todoList = [];
+      for (let id in todos) {
+        todoList.push({ id, ...todos[id] });
+      }
+      setTodos(todoList.reverse());
+    });
+  };
 
   const filteredTodos = useMemo(
     () =>
@@ -42,37 +55,11 @@ function Main() {
     [todos, filter],
   );
 
-  const addTodo = todo => {
-    const newTodos = [todo, ...todos];
-    setTodos(newTodos);
-  };
-
-  const removeTodo = id => {
-    const newTodos = [...todos].filter(todo => todo.id !== id);
-
-    setTodos(newTodos);
-  };
-
-  const editTodo = Todo => {
-    const newTodos = [...todos].map(todo => {
-      if (todo.id === Todo.id) {
-        todo.text = Todo.text;
-        todo.completed = Todo.completed;
-      }
-      return todo;
-    });
-    setTodos(newTodos);
-  };
-
   return (
     <>
       <h1 className={classes.h1}>TODO</h1>
-      <TodoForm addTodo={addTodo} />
-      <TodoList
-        todos={filteredTodos}
-        removeTodo={removeTodo}
-        editTodo={editTodo}
-      />
+      <TodoForm />
+      <TodoList todos={filteredTodos} />
       <TodoStats todos={filteredTodos} setFilter={setFilter} />
     </>
   );

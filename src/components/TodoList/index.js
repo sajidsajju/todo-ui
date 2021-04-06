@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
+import firebase from "../../util/firebase";
+
 import ClearIcon from "@material-ui/icons/Clear";
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 import EditIcon from "@material-ui/icons/Edit";
 import DoneIcon from "@material-ui/icons/Done";
+
+const todoRef = firebase.database().ref("Todo");
 
 const useStyles = makeStyles({
   todo: {
@@ -51,44 +55,43 @@ const useStyles = makeStyles({
 
 const List = props => {
   const classes = useStyles();
-  const { todo, removeTodo, editTodo } = props;
+  const { todo } = props;
 
   const [text, setText] = useState("");
   const [editable, setEditable] = useState(false);
 
-  const deleteTodo = (id, removeTodo) => {
-    removeTodo(id);
+  const deleteTodo = id => {
+    const Todo = todoRef.child(todo.id);
+    Todo.remove();
   };
 
   const updateTodo = () => {
     setText(todo.text);
     if (editable) {
       const data = {
-        id: todo.id,
         completed: todo.completed,
         text: text,
       };
-      editTodo(data);
+      const Todo = todoRef.child(todo.id);
+      Todo.set(data);
     }
     setEditable(!editable);
   };
 
-  const TodoCompletedHandler = () => {
+  const updateCompletedTodo = () => {
     const data = {
-      id: todo.id,
       completed: !todo.completed,
       text: todo.text,
     };
-    editTodo(data);
+    const Todo = todoRef.child(todo.id);
+    Todo.set(data);
   };
 
   const Icons = (
     <>
       <span
         className={classes.icon}
-        onClick={() => {
-          deleteTodo(todo.id, removeTodo);
-        }}
+        onClick={deleteTodo}
         aria-label="delete-todo"
       >
         <ClearIcon />
@@ -108,8 +111,8 @@ const List = props => {
       <div className={classes.wrapper}>
         <span
           className={classes.strikeOffIcon}
-          onClick={TodoCompletedHandler}
-          aria-label="TodoCompleted-Handler"
+          onClick={updateCompletedTodo}
+          aria-label="update-completed-todo"
         >
           <DoneOutlineIcon style={{ fontSize: "0.9em" }} />
         </span>
@@ -134,17 +137,12 @@ const List = props => {
 };
 
 function TodoList(props) {
-  const { todos, removeTodo, editTodo } = props;
+  const { todos } = props;
 
   return (
     <>
       {todos.map((todo, index) => (
-        <List
-          todo={todo}
-          key={index}
-          removeTodo={removeTodo}
-          editTodo={editTodo}
-        />
+        <List todo={todo} key={index} />
       ))}
     </>
   );
