@@ -5,7 +5,8 @@ const useStyles = makeStyles({
   main: {
     width: "40em",
     margin: "auto",
-    background: "#654321",
+    background: "#696969",
+    borderRadius: "25px",
   },
   wrapper: {
     paddingLeft: "10px",
@@ -40,28 +41,32 @@ function TodoStats(props) {
   };
 
   return (
-    <div className={classes.main}>
-      <div className={classes.wrapper}>
-        <span>{todos.length} items left</span>
-        <div className={classes.links}>
-          <span className={classes.span} onClick={() => filterHandler("all")}>
-            All
-          </span>
-          <span
-            className={classes.span}
-            onClick={() => filterHandler("active")}
-          >
-            Active
-          </span>
-          <span
-            className={classes.span}
-            onClick={() => filterHandler("completed")}
-          >
-            Completed
-          </span>
+    <>
+      <div className={classes.main}>
+        <div className={classes.wrapper}>
+          <span>{todos.length} items left</span>
+          <div className={classes.links}>
+            <span className={classes.span} onClick={() => filterHandler("all")}>
+              All
+            </span>
+            <span
+              className={classes.span}
+              onClick={() => filterHandler("active")}
+            >
+              Active
+            </span>
+            <span
+              className={classes.span}
+              onClick={() => filterHandler("completed")}
+            >
+              Completed
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+      <br />
+      <br />
+    </>
   );
 }
 
