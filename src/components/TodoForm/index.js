@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { makeStyles, TextField } from "@material-ui/core";
 import firebase from "../../util/firebase";
-
-const todoRef = firebase.database().ref("Todo");
+import { addTodo } from "../Api";
 
 const useStyles = makeStyles({
   form: {
     textAlign: "center",
     width: "40em",
     margin: "auto",
-    background: "#654321",
   },
   textField: {
     "&&&:before": {
@@ -19,29 +17,35 @@ const useStyles = makeStyles({
       borderBottom: "none",
     },
     color: "#000000",
-    fontSize: "1.5em",
+    borderRadius: "25px",
+    border: "5px solid #696969",
+    fontSize: "1.4em",
     paddingLeft: "10px",
-    border: "1px solid black",
     background: "#FFFFFF",
+    overflow: "hidden",
   },
 });
 
-function TodoForm() {
+function TodoForm(props) {
   const classes = useStyles();
+  const { user } = props;
   const [text, setText] = useState("");
 
   const handleChange = event => {
-    const value = event.target.value;
-    setText(value);
+    if (event.target.value.length < 30) {
+      const value = event.target.value;
+      setText(value);
+    }
   };
 
   const onSubmit = event => {
     event.preventDefault();
     const todo = {
+      date: firebase.firestore.FieldValue.serverTimestamp(),
       text: text,
       completed: false,
     };
-    todoRef.push(todo);
+    addTodo(user.uid, todo);
     setText("");
   };
 
@@ -52,7 +56,6 @@ function TodoForm() {
         margin="normal"
         placeholder="what needs to be added ? "
         fullWidth
-        label=" "
         value={text}
         onChange={handleChange}
         autoComplete="off"

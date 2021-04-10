@@ -8,19 +8,6 @@ exports[`<TodoForm  /> should match the snapshot 1`] = `
     class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
     data-testid="input-field"
   >
-    <label
-      class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-required Mui-required"
-      data-shrink="false"
-    >
-       
-      <span
-        aria-hidden="true"
-        class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
-      >
-         
-        *
-      </span>
-    </label>
     <div
       class="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-textField-2 MuiInputBase-fullWidth MuiInput-fullWidth MuiInputBase-formControl MuiInput-formControl"
     >
