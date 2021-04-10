@@ -5,28 +5,29 @@ import TodoList from "../";
 
 describe("<TodoList  />", () => {
   const todos = [{ text: "hello" }];
+  const user = { uid: "1" };
 
   it("should match the snapshot", () => {
-    const rendered = render(<TodoList todos={todos} />);
+    const rendered = render(<TodoList todos={todos} user={user} />);
 
     expect(rendered.container.firstChild).toMatchSnapshot();
   });
 
   it("should check the passed Todos in the document", () => {
-    render(<TodoList todos={todos} />);
+    render(<TodoList todos={todos} user={user} />);
 
     expect(screen.getByText("hello")).toBeInTheDocument();
   });
 
   it("should call deleteTodo when click event fired on ClearIcon", () => {
-    render(<TodoList todos={todos} />);
+    render(<TodoList todos={todos} user={user} />);
 
     const clearButton = screen.getByLabelText("delete-todo");
     expect(clearButton).toBeInTheDocument();
   });
 
   it("should call editTodo when click event fired on editIcon", () => {
-    render(<TodoList todos={todos} />);
+    render(<TodoList todos={todos} user={user} />);
 
     const editButton = screen.getByLabelText("update-todo");
     fireEvent.click(editButton);
@@ -39,7 +40,7 @@ describe("<TodoList  />", () => {
   });
 
   it("should call editTodo when click event fired on DoneOutlineIcon", () => {
-    render(<TodoList todos={todos} />);
+    render(<TodoList todos={todos} user={user} />);
 
     const strikeOffButton = screen.getByLabelText("update-completed-todo");
     expect(strikeOffButton).toBeInTheDocument();
