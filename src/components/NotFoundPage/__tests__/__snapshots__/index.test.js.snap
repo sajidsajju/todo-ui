@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<NotFoundPage  /> should match the snapshot 1`] = `
+<div
+  class="makeStyles-wrapper-1"
+>
+  <div
+    class="makeStyles-title-2"
+  >
+    4
+    <span
+      aria-label="Crying Face"
+      class="makeStyles-span-3"
+      role="img"
+    >
+      😢
+    </span>
+    4
+  </div>
+  <span
+    class="makeStyles-span-3"
+  >
+    Page not found
+  </span>
+</div>
+`;
