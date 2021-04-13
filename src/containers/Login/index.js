@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 
@@ -33,21 +33,13 @@ const Login = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  const [logged, setLogged] = useState(false);
-
   useEffect(() => {
-    if (logged) {
-      history.push("/");
-    }
-  }, [history, logged]);
-
-  auth.onAuthStateChanged(function (user) {
-    if (user) {
-      setLogged(true);
-    } else {
-      setLogged(false);
-    }
-  });
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        history.push("/");
+      }
+    });
+  }, [history]);
 
   return (
     <div className={classes.container}>
