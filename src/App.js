@@ -10,8 +10,6 @@ import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Todo from "./containers/Todo";
 import Login from "./containers/Login";
 import NotFoundPage from "./components/NotFoundPage";
-import { AuthProvider } from "./containers/Login/AuthProvider";
-import PrivateRoute from "./containers/Login/privateRoute";
 
 const theme = createMuiTheme({
   typography: {
@@ -38,15 +36,13 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className={classes.body}>
-        <AuthProvider>
-          <Router>
-            <Switch>
-              <PrivateRoute exact path="/" component={Todo} />
-              <Route path="/login" component={Login} />
-              <Route component={NotFoundPage} />
-            </Switch>
-          </Router>
-        </AuthProvider>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Todo} />
+            <Route path="/login" component={Login} />
+            <Route component={NotFoundPage} />
+          </Switch>
+        </Router>
       </div>
     </ThemeProvider>
   );
