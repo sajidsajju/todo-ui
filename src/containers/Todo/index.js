@@ -1,13 +1,14 @@
-import React, { useEffect, useMemo, useState, useContext } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import SyncLoader from "react-spinners/SyncLoader";
 
 import TodoList from "../../components/TodoList";
 import TodoForm from "../../components/TodoForm";
 import TodoStats from "../../components/TodoStats";
-import { AuthContext } from "../Login/AuthProvider";
 import TodoAppBar from "../../components/AppBar";
 import { getTodos } from "../../components/Api";
+import { auth } from "../../util/firebase";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   h1: {
@@ -28,15 +29,22 @@ const useStyles = makeStyles({
 
 function Todo() {
   const classes = useStyles();
-
+  const history = useHistory();
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("all");
   const [loading, setLoading] = useState(true);
-  const { user } = useContext(AuthContext);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    getTodos(user.uid, setData);
-  }, [user]);
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        setUser(user);
+        getTodos(user.uid, setData);
+      } else {
+        history.push("/login");
+      }
+    });
+  }, [history]);
 
   const setData = todos => {
     setTodos(todos);
