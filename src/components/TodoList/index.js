@@ -74,7 +74,7 @@ const useStyles = makeStyles({
   },
 });
 
-const List = props => {
+const Todo = props => {
   const classes = useStyles();
   const { todo, user } = props;
 
@@ -174,7 +174,7 @@ function TodoList(props) {
   return (
     <>
       {todos.map((todo, index) => (
-        <List todo={todo} key={index} user={user} />
+        <Todo todo={todo} key={index} user={user} />
       ))}
     </>
   );
